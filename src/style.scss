@@ -72,17 +72,34 @@ header {
     max-height: 20rem;
   }
 
-  p {
-    padding: 24px;
-    font-family: $font-two;
-    text-align: justify;
-    color: $color-one;
+  #intro {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100%;
-    font-size: 1.5rem;
+    flex-wrap: wrap;
+
+    p {
+      padding: 24px;
+      font-family: $font-two;
+      text-align: justify;
+      color: $color-one;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 1.5rem;
+    }
+
+    button {
+      background-color: red;
+      color: darkred;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 1.5rem;
+      height: 5rem;
+      width: 5rem;
+      border-radius: 3rem;
+    }
   }
+
 }
 
 #makers {

@@ -48,7 +48,7 @@ class Heroes extends React.Component {
   renderHero(i) {
     return (
       <Hero
-        hero={this.props.heroes[i]}
+        hero={heroes[i]}
       />
     );
   }
@@ -92,10 +92,13 @@ class Landing extends React.Component {
       <main id="main-landing">
         <section id="intro-section">
           <img src={title} alt='arnold with gun' />
-          <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, click one of the buttons below.</p>
+          <div id="intro">
+            <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, then push da button... Go on, do it!!</p>
+            <button onClick={() => this.props.onClick()}>START</button>
+          </div>
         </section>
-        <Heroes heroes={this.props.heroes}/>
         <Rules />
+        <Heroes />
         <Legal />
         <Makers />
       </main>
@@ -163,10 +166,9 @@ class Battleground extends React.Component {
 
 class Header extends React.Component {
   render(props) {
-    console.log(this.props.mode)
     return(
       <header id={this.props.mode ? 'battle-header' : 'landing-header'}>
-        {this.props.mode && <h2>Home</h2>}
+        {this.props.mode && <h2 onClick={() => this.props.onClick()}>Home</h2>}
         <h1 id="header-title">{this.props.mode ? 'Brutal Battleground' : 'Get to Da Choppa!'}</h1>
       </header>
     )
@@ -181,11 +183,18 @@ class Game extends React.Component {
     };
   }
 
+  handleClick() {
+    console.log('Button was clicked!!')
+    this.setState({
+      isBattle: !this.state.isBattle
+    })
+  }
+
   render() {
     return (
       <div id="game">
-        <Header mode={this.state.isBattle} />
-        {this.state.isBattle ? <Battleground hero={heroes[1]} /> : <Landing heroes={heroes} />}
+        <Header mode={this.state.isBattle} onClick={() => this.handleClick()}/>
+        {this.state.isBattle ? <Battleground hero={heroes[1]} /> : <Landing onClick={() => this.handleClick()}/>}
         <footer id='page-footer'>Copyright &copy; 2020 AngryAustrian Enterprises</footer>
       </div>
     )
