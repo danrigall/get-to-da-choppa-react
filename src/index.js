@@ -8,7 +8,7 @@ import heroes from './js/heroes'
 function Rules() {
   return (
     <section id="rules">
-      <h2>Da Rülz</h2>
+      <h1>Da Rülz</h1>
       <p>As one of the most unforgettable heroes of all time, you will battle the most heinous villains the world has ever known. Will you crush their throats with your bare hands? Or will you run screaming from their army of loyal minions? The choice is yours.</p>
       <div id="release">
         <h2>Release Notes</h2>
@@ -35,11 +35,8 @@ function Hero(props) {
   return (
     <div className='hero-wrapper'>
       <h2>{props.hero.name}</h2>
-      <img src="./img/{this.props.value.file}.png" alt={props.hero.name} />
+      <img src={props.hero.img} alt={props.hero.name} />
       <p>{props.hero.desc}</p>
-      {/* <h2>Douglas Quaid</h2>
-      <img src="./img/{this.props.value.file}.png" alt="Douglas Quaid" />
-      <p>The guy with the most speed</p> */}
     </div>
   )
 }
@@ -56,6 +53,7 @@ class Heroes extends React.Component {
   render() {
     return (
       <section id="hero-section">
+        <h1>Da Heroes</h1>
         { this.renderHero(0)}
         { this.renderHero(1)}
         { this.renderHero(2)}
@@ -68,7 +66,7 @@ class Heroes extends React.Component {
 function Legal() {
   return (
     <section id="legal">
-      <h2>Da Legal</h2>
+      <h1>Da Legal</h1>
       <p>This game is in no way affiliated with or sanctioned by the Honorable Arnold Schwarzenegger (may he live forever, etc.), 20th Century Fox, Paramount Pictures, or any other corporate entity I may forgotten. It is intended as an homage to my favorite action star of all time and the movies I grew up watching that still today provide some of the most memorable quotes.</p>
       {/* <a >Close</a> */}
     </section>
@@ -78,7 +76,7 @@ function Legal() {
 function Makers() {
   return (
     <section id="makers">
-      <h2>Da Maker</h2>
+      <h1>Da Maker</h1>
       <img src={headshot} alt="Gabe headshot" />
       <p>Gabe Rigall is an independent programmer/web developer/data analyst/machine learning enthusiast/evil genius who grew up watching Arnold Schwarzenegger movies and playing card, board, and videogames. The inspiration for "Get to Da Choppa" came after a particularly riveting bout of "Marrying Mr. Darcy" wherein his wife soundly beat him to the punch (pun intended).</p>
       {/* <a >Close</a> */}
@@ -93,7 +91,7 @@ class Landing extends React.Component {
         <section id="intro-section">
           <img src={title} alt='arnold with gun' />
           <div id="intro">
-            <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, then push da button... Go on, do it!!</p>
+            <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, then push da button...</p>
             <button onClick={() => this.props.onClick()}>START</button>
           </div>
         </section>
