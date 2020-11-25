@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style.scss';
-import title from './images/title.png'
+import title from './images/1-main.png'
 import headshot from './images/gabe2.png'
 import heroes from './js/heroes'
 
@@ -130,9 +130,9 @@ class Player extends React.Component {
   render(props) {
     return (
       <section id="player-section">
-        <div id="hero-card" className="card" onClick="TODO: Shows card description">
-          <img src="img/${player.NN}.png"/>
+        <div id="hero-card" className="card" onClick={'TODO: MAKE FUNCTION chooseHero()'}>
           <h3>{this.props.chosen.name}</h3>
+          <img src={this.props.chosen.img} />
           <p>Health: {this.props.chosen.hp}</p>
           <p>Strength: {this.props.chosen.str}</p>
           <p>Speed: {this.props.chosen.spd}</p>
@@ -178,11 +178,16 @@ class Game extends React.Component {
     super(props);
     this.state = {
       isBattle: false,
+      hero: {
+        health: null,
+        strength: null,
+        speed: null,
+        weapon: null,
+      },
     };
   }
 
   handleClick() {
-    console.log('Button was clicked!!')
     this.setState({
       isBattle: !this.state.isBattle
     })
