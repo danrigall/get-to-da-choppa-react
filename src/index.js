@@ -14,7 +14,7 @@ function Rules() {
         <h2>Release Notes</h2>
         <h3>Version 1.0</h3>
         <p>This version is modeled after the physical card game and, as such, is currently bare bones. There are many more features planned but in the meantime, please enjoy!</p>
-        {/* <a >Close</a> */}
+        {/* <button>Close</button> */}
       </div>
       <div id='future'>
         <h2>Future Features</h2>
@@ -24,16 +24,16 @@ function Rules() {
           <li>Trusty Sidekicks!</li>
           <li>Environments!</li>
         </ul>
-        {/* <a >Close</a> */}
+        {/* <button>Close</button> */}
       </div>
-      {/* <a >Close</a> */}
+      {/* <button>Close</button> */}
     </section>
   )
 }
 
 function Hero(props) {
   return (
-    <div className='hero-wrapper'>
+    <div className='hero-wrapper' onClick={props.onClick}>
       <h2>{props.hero.name}</h2>
       <img src={props.hero.img} alt={props.hero.name} />
       <p>{props.hero.desc}</p>
@@ -68,7 +68,7 @@ function Legal() {
     <section id="legal">
       <h1>Da Legal</h1>
       <p>This game is in no way affiliated with or sanctioned by the Honorable Arnold Schwarzenegger (may he live forever, etc.), 20th Century Fox, Paramount Pictures, or any other corporate entity I may forgotten. It is intended as an homage to my favorite action star of all time and the movies I grew up watching that still today provide some of the most memorable quotes.</p>
-      {/* <a >Close</a> */}
+      {/* <button>Close</button> */}
     </section>
   )
 }
@@ -79,7 +79,7 @@ function Makers() {
       <h1>Da Maker</h1>
       <img src={headshot} alt="Gabe headshot" />
       <p>Gabe Rigall is an independent programmer/web developer/data analyst/machine learning enthusiast/evil genius who grew up watching Arnold Schwarzenegger movies and playing card, board, and videogames. The inspiration for "Get to Da Choppa" came after a particularly riveting bout of "Marrying Mr. Darcy" wherein his wife soundly beat him to the punch (pun intended).</p>
-      {/* <a >Close</a> */}
+      {/* <button>Close</button> */}
     </section>
   )
 }
@@ -92,7 +92,7 @@ class Landing extends React.Component {
           <img src={title} alt='arnold with gun' />
           <div id="intro">
             <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, then push da button...</p>
-            <button onClick={() => this.props.onClick()}>START</button>
+            <button onClick={() => this.props.onClick()}>GO</button>
           </div>
         </section>
         <Rules />
@@ -126,17 +126,44 @@ class Enemy extends React.Component {
   }
 }
 
+class ChooseHero extends React.Component {
+  renderHero(i) {
+    return (
+      <Hero
+        hero={heroes[i]}
+        onClick={() => this.props.onClick(i)}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <div id='choose-hero'>
+        <h1>Choose Your Hero!</h1>
+        <div id='battle-heroes'>
+          {this.renderHero(0)}
+          {this.renderHero(1)}
+          {this.renderHero(2)}
+          {this.renderHero(3)}
+        </div>
+        <div className='modal-bgd'></div>
+      </div>
+    )
+  }
+}
+
 class Player extends React.Component {
   render(props) {
     return (
       <section id="player-section">
-        <div id="hero-card" className="card" onClick={'TODO: MAKE FUNCTION chooseHero()'}>
-          <h3>{this.props.chosen.name}</h3>
-          <img src={this.props.chosen.img} />
-          <p>Health: {this.props.chosen.hp}</p>
-          <p>Strength: {this.props.chosen.str}</p>
-          <p>Speed: {this.props.chosen.spd}</p>
-          <p id="weapon">Weapon: </p>
+        {(this.props.phase < 1) && <ChooseHero hero={this.props.hero} onClick={(i) => this.props.onClick(i)}/>}
+        <div id="hero-card" className="card">
+          <h3>{this.props.hero.name}</h3>
+          <img src={this.props.hero.img} />
+          <p>Health: {this.props.hero.hp}</p>
+          <p>Strength: {this.props.hero.str}</p>
+          <p>Speed: {this.props.hero.spd}</p>
+          <p id="weapon">Weapon: {this.props.hero.wpn}</p>
         </div>
 
         <div id="deck-1" className="card empty-card">
@@ -156,7 +183,7 @@ class Battleground extends React.Component {
     return (
       <main id="battle">
         <Enemy />
-        <Player chosen={this.props.hero} />
+        <Player hero={this.props.hero} onClick={(i) => this.props.onClick(i)} phase={this.props.phase}/>
       </main>
     )
   }
@@ -178,13 +205,29 @@ class Game extends React.Component {
     super(props);
     this.state = {
       isBattle: false,
+      playphase: 0,
       hero: {
-        health: null,
-        strength: null,
-        speed: null,
-        weapon: null,
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+        wpn: '',
       },
     };
+  }
+
+  handleChoose(i) {
+    this.setState({
+      hero: {
+        name: heroes[i].name,
+        img: heroes[i].img,
+        hp: heroes[i].hp,
+        str: heroes[i].str,
+        spd: heroes[i].spd,
+      },
+      playphase: 1,
+    })
   }
 
   handleClick() {
@@ -197,7 +240,7 @@ class Game extends React.Component {
     return (
       <div id="game">
         <Header mode={this.state.isBattle} onClick={() => this.handleClick()}/>
-        {this.state.isBattle ? <Battleground hero={heroes[1]} /> : <Landing onClick={() => this.handleClick()}/>}
+        {this.state.isBattle ? <Battleground hero={this.state.hero} phase={this.state.playphase} onClick={(i) => this.handleChoose(i)}/> : <Landing onClick={() => this.handleClick()}/>}
         <footer id='page-footer'>Copyright &copy; 2020 AngryAustrian Enterprises</footer>
       </div>
     )
