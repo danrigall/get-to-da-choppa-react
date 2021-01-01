@@ -105,13 +105,22 @@ class Landing extends React.Component {
   }
 }
 
+function EnemyStats(props) {
+  return (
+    <div id='enemy-stats'>
+      <img src={props.enemy.img} alt={props.enemy.name} />
+      <h3>{props.enemy.name}</h3>
+      <p>Health: {props.enemy.hp}</p>
+      <p>Strength: {props.enemy.str}</p>
+      <p>Speed: {props.enemy.spd}</p>
+    </div>
+  )
+}
+
 function Enemy(props) {
   return (
-    <div id='enemy-card' className='card' onClick={props.onClick}>
-      {props.phase < 2 && <div>Reveal Enemy</div>}
-      <h2>{props.enemy.name}</h2>
-      <img src={props.enemy.img} alt={props.enemy.name} />
-      {/* <p>{props.enemy.desc}</p> */}
+    <div id='enemy-card' className={props.phase < 2 ? 'card empty-card' : 'card'} onClick={props.onClick}>
+      {props.phase < 2 ? <div>Reveal Enemy</div> : <EnemyStats enemy={props.enemy} />}
     </div>
   )
 }
@@ -211,14 +220,15 @@ class Battleground extends React.Component {
     }
   }
 
-  revealEnemy(i) {
+  revealEnemy() {
+    let rando = Math.floor(Math.random() * enemies.length)
     this.setState({
       enemy: {
-        name: enemies[i].name,
-        img: enemies[i].img,
-        hp: enemies[i].hp,
-        str: enemies[i].str,
-        spd: enemies[i].spd,
+        name: enemies[rando].name,
+        img: enemies[rando].img,
+        hp: enemies[rando].hp,
+        str: enemies[rando].str,
+        spd: enemies[rando].spd,
       },
       playphase: 2
     });
@@ -240,7 +250,7 @@ class Battleground extends React.Component {
   render(props) {
     return (
       <main id="battle">
-        <EnemySection enemy={this.state.enemy} onClick={() => this.revealEnemy(0)} phase={this.state.playphase}/>
+        <EnemySection enemy={this.state.enemy} onClick={() => this.revealEnemy()} phase={this.state.playphase}/>
         <Player hero={this.state.hero} onClick={(i) => this.handleChoose(i)} phase={this.state.playphase}/>
       </main>
     )
