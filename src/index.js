@@ -105,41 +105,18 @@ class Landing extends React.Component {
   }
 }
 
-class Enemy extends React.Component {
-  render(props) {
-    return (
-      <div id='enemy-card' onClick={props.onClick}>
-        <h2>{props.hero.name}</h2>
-        <img src={props.hero.img} alt={props.hero.name} />
-        <p>{props.hero.desc}</p>
-      </div>
-    )
-  }
-}
-
-function EnemyReveal(props) {
+function Enemy(props) {
   return (
-    <div id="enemy-card" className="card empty-card" onClick={props.onClick}>
-      <div>Reveal Enemy</div>
+    <div id='enemy-card' className='card' onClick={props.onClick}>
+      {props.phase < 2 && <div>Reveal Enemy</div>}
+      <h2>{props.enemy.name}</h2>
+      <img src={props.enemy.img} alt={props.enemy.name} />
+      {/* <p>{props.enemy.desc}</p> */}
     </div>
   )
 }
 
 class EnemySection extends React.Component {
-  revealEnemy(enemy) {
-    alert('the enemy is revealed!');
-    this.setState({
-      enemy: {
-        name: enemy.name,
-        img: enemy.img,
-        hp: enemy.hp,
-        str: enemy.str,
-        spd: enemy.spd,
-      },
-      playphase: 2
-    })
-  }
-
   render(props) {
     return (
       <section id="enemy-section">
@@ -148,7 +125,7 @@ class EnemySection extends React.Component {
           <p>{'TODO: Create & Call killCount function'}</p>
         </div>
 
-        {(this.props.phase < 2) ? <EnemyReveal onClick={() => { this.revealEnemy(enemies[0])}}/> : <Enemy enemy={this.props.enemy}/>}
+        <Enemy enemy={this.props.enemy} onClick={() => {this.props.onClick()}} phase={this.props.phase}/>
 
         <div id="kill-list" className="card empty-card">
           <h3>Kill List</h3>
@@ -212,11 +189,59 @@ class Player extends React.Component {
 }
 
 class Battleground extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      playphase: 0,
+      hero: {
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+        wpn: '',
+      },
+      enemy: {
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+      }
+    }
+  }
+
+  revealEnemy(i) {
+    this.setState({
+      enemy: {
+        name: enemies[i].name,
+        img: enemies[i].img,
+        hp: enemies[i].hp,
+        str: enemies[i].str,
+        spd: enemies[i].spd,
+      },
+      playphase: 2
+    });
+  }
+
+  handleChoose(i) {
+    this.setState({
+      hero: {
+        name: heroes[i].name,
+        img: heroes[i].img,
+        hp: heroes[i].hp,
+        str: heroes[i].str,
+        spd: heroes[i].spd,
+      },
+      playphase: 1,
+    })
+  }
+
   render(props) {
     return (
       <main id="battle">
-        <EnemySection enemy={this.props.enemy} phase={this.props.phase}/>
-        <Player hero={this.props.hero} onClick={(i) => this.props.onClick(i)} phase={this.props.phase}/>
+        <EnemySection enemy={this.state.enemy} onClick={() => this.revealEnemy(0)} phase={this.state.playphase}/>
+        <Player hero={this.state.hero} onClick={(i) => this.handleChoose(i)} phase={this.state.playphase}/>
       </main>
     )
   }
@@ -238,36 +263,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       isBattle: false,
-      playphase: 0,
-      hero: {
-        name: '',
-        img: '',
-        hp: null,
-        str: null,
-        spd: null,
-        wpn: '',
-      },
-      enemy: {
-        name: '',
-        img: '',
-        hp: null,
-        str: null,
-        spd: null,
-      }
     };
-  }
-
-  handleChoose(i) {
-    this.setState({
-      hero: {
-        name: heroes[i].name,
-        img: heroes[i].img,
-        hp: heroes[i].hp,
-        str: heroes[i].str,
-        spd: heroes[i].spd,
-      },
-      playphase: 1,
-    })
   }
 
   handleClick() {
@@ -279,8 +275,8 @@ class Game extends React.Component {
   render() {
     return (
       <div id="game">
-        <Header mode={this.state.isBattle} onClick={() => this.handleClick()}/>
-        {this.state.isBattle ? <Battleground hero={this.state.hero} enemy={this.state.enemy} phase={this.state.playphase} onClick={(i) => this.handleChoose(i)}/> : <Landing onClick={() => this.handleClick()}/>}
+        <Header mode={this.state.isBattle} onClick={() => this.handleClick()} />
+        {this.state.isBattle ? <Battleground /> : <Landing onClick={() => this.handleClick()} />}
         <footer id='page-footer'>Copyright &copy; 2020 AngryAustrian Enterprises</footer>
       </div>
     )
