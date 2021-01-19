@@ -136,7 +136,7 @@ class EnemySection extends React.Component {
 
         <Enemy enemy={this.props.enemy} onClick={() => {this.props.onClick()}} phase={this.props.phase}/>
 
-        <div id="kill-list" className="card empty-card">
+        <div id="kill-list" className="card">
           <h3>Kill List</h3>
           <p id="emptyID"></p>
         </div>

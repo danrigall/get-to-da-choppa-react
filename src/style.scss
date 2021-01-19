@@ -252,6 +252,10 @@ header {
     box-sizing: border-box;
     background-color: $color-two;
 
+    h3 {
+      border-bottom: 1px solid darkgray;
+    }
+
     img {
       width: 100%;
     }
