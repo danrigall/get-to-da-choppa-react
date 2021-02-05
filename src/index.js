@@ -5,6 +5,7 @@ import title from './images/1-main.png'
 import headshot from './images/gabe2.png'
 import heroes from './js/heroes'
 import enemies from './js/enemies'
+import playerDeck from './js/cards'
 
 function Rules() {
   return (
@@ -171,6 +172,14 @@ class ChooseHero extends React.Component {
   }
 }
 
+function ActionCard(props) {
+  return (
+    <div className="card empty-card" onClick={() => props.onClick}>
+      <p>{props.name}</p>
+    </div>
+  )
+}
+
 class Player extends React.Component {
   render(props) {
     return (
@@ -184,14 +193,9 @@ class Player extends React.Component {
           <p>Speed: {this.props.hero.spd}</p>
           <p id="weapon">Weapon: {this.props.hero.wpn}</p>
         </div>
-
-        <div id="deck-1" className="card empty-card">
-          <a onClick="TODO: Refresh action card">Action Card 1</a>
-        </div>
-
-        <div id="deck-2" className="card empty-card">
-          <a onClick="TODO: Refresh action card">Action Card 2</a>
-        </div>
+        {/* TODO: FIGURE THIS OUT! */}
+        <ActionCard id="deck1" name="Action Card 1" onClick={() => this.props.onClick()} />
+        <ActionCard id="deck2" name="Action Card 2" onClick={() => this.props.onClick()} />
       </section>
     )
   }
@@ -216,12 +220,27 @@ class Battleground extends React.Component {
         hp: null,
         str: null,
         spd: null,
+      },
+      card1: {
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+        die: null,
+        dmg: null,
+        fxPlayer: false,
+        fxBoss: false,
+        fxMinion: false,
+        bonus: null,
+        desc: '',
       }
     }
   }
 
   revealEnemy() {
     let rando = Math.floor(Math.random() * enemies.length)
+    console.log('enemy was clicked')
     this.setState({
       enemy: {
         name: enemies[rando].name,
@@ -232,6 +251,27 @@ class Battleground extends React.Component {
       },
       playphase: 2
     });
+  }
+
+  handleDraw() {
+    let rando = Math.floor(Math.random() * playerDeck.length)
+      console.log('card deck was clicked!');
+      this.setState({
+      card1: {
+        name: playerDeck[rando].name,
+        img: playerDeck[rando].img,
+        hp: playerDeck[rando].hp,
+        str: playerDeck[rando].str,
+        spd: playerDeck[rando].spd,
+        die: playerDeck[rando].die,
+        dmg: playerDeck[rando].dmg,
+        fxPlayer: playerDeck[rando].fxPlayer,
+        fxBoss: playerDeck[rando].fxBoss,
+        fxMinion: playerDeck[rando].fxMinion,
+        bonus: playerDeck[rando].bonus,
+        desc: playerDeck[rando].desc,
+      }
+    })
   }
 
   handleChoose(i) {
@@ -250,8 +290,8 @@ class Battleground extends React.Component {
   render(props) {
     return (
       <main id="battle">
-        <EnemySection enemy={this.state.enemy} onClick={() => this.revealEnemy()} phase={this.state.playphase}/>
-        <Player hero={this.state.hero} onClick={(i) => this.handleChoose(i)} phase={this.state.playphase}/>
+        <EnemySection enemy={this.state.enemy} onClick={() => (this.state.playphase < 2) && this.revealEnemy()} phase={this.state.playphase}/>
+        <Player hero={this.state.hero} onClick={(this.state.playphase < 1) ? (i) => this.handleChoose(i) : () => this.handleDraw()} phase={this.state.playphase}/>
       </main>
     )
   }
