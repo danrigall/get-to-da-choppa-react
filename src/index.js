@@ -173,14 +173,88 @@ class ChooseHero extends React.Component {
 }
 
 function ActionCard(props) {
+  const c = props.card
   return (
-    <div className="card empty-card" onClick={() => props.onClick}>
-      <p>{props.name}</p>
+    <div className={c.isEmpty ? 'card empty-card' : 'card'} onClick={() => c.isEmpty && props.onClick()}>
+      {c.isEmpty ? 
+        <p>{props.name}</p> :
+        <div className="action-card-stats">
+          <img src={c.img} alt={c.name} />
+          <h3>{c.name}</h3>
+          <p>Health: {c.hp}</p>
+          <p>Strength: {c.str}</p>
+          <p>Speed: {c.spd}</p>
+        </div>
+      }
     </div>
   )
 }
 
 class Player extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cards: [{
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+        die: null,
+        dmg: null,
+        fxPlayer: false,
+        fxBoss: false,
+        fxMinion: false,
+        bonus: null,
+        desc: '',
+        isEmpty: true,
+      },
+      {
+        name: '',
+        img: '',
+        hp: null,
+        str: null,
+        spd: null,
+        die: null,
+        dmg: null,
+        fxPlayer: false,
+        fxBoss: false,
+        fxMinion: false,
+        bonus: null,
+        desc: '',
+        isEmpty: true,
+      }]
+    }
+  }
+  
+  drawCard(i) {
+    let rando = Math.floor(Math.random() * enemies.length)
+    // TODO: MAKE COPY OF playerDeck ARR INSTEAD OF MUTATING IT
+    this.setState(this.state.cards[i] = Object.assign({},
+      this.state.cards[i],
+      {
+        name: playerDeck[rando].name,
+        img: playerDeck[rando].img,
+        hp: playerDeck[rando].hp,
+        str: playerDeck[rando].str,
+        spd: playerDeck[rando].spd,
+        die: playerDeck[rando].die,
+        dmg: playerDeck[rando].dmg,
+        fxPlayer: playerDeck[rando].fxPlayer,
+        fxBoss: playerDeck[rando].fxBoss,
+        fxMinion: playerDeck[rando].fxMinion,
+        bonus: playerDeck[rando].bonus,
+        desc: playerDeck[rando].desc,
+        isEmpty: false,
+      }));
+  }
+  
+  renderCard(i) {
+    return (
+      <ActionCard name={"Action Card " + (i+1)} card={this.state.cards[i]} onClick={() => this.drawCard(i)} />
+    )
+  }
+  
   render(props) {
     return (
       <section id="player-section">
@@ -194,8 +268,8 @@ class Player extends React.Component {
           <p id="weapon">Weapon: {this.props.hero.wpn}</p>
         </div>
         {/* TODO: FIGURE THIS OUT! */}
-        <ActionCard id="deck1" name="Action Card 1" onClick={() => this.props.onClick()} />
-        <ActionCard id="deck2" name="Action Card 2" onClick={() => this.props.onClick()} />
+        {this.renderCard(0)}
+        {this.renderCard(1)}
       </section>
     )
   }
@@ -221,23 +295,9 @@ class Battleground extends React.Component {
         str: null,
         spd: null,
       },
-      card1: {
-        name: '',
-        img: '',
-        hp: null,
-        str: null,
-        spd: null,
-        die: null,
-        dmg: null,
-        fxPlayer: false,
-        fxBoss: false,
-        fxMinion: false,
-        bonus: null,
-        desc: '',
-      }
     }
   }
-
+  
   revealEnemy() {
     let rando = Math.floor(Math.random() * enemies.length)
     console.log('enemy was clicked')
@@ -251,27 +311,6 @@ class Battleground extends React.Component {
       },
       playphase: 2
     });
-  }
-
-  handleDraw() {
-    let rando = Math.floor(Math.random() * playerDeck.length)
-      console.log('card deck was clicked!');
-      this.setState({
-      card1: {
-        name: playerDeck[rando].name,
-        img: playerDeck[rando].img,
-        hp: playerDeck[rando].hp,
-        str: playerDeck[rando].str,
-        spd: playerDeck[rando].spd,
-        die: playerDeck[rando].die,
-        dmg: playerDeck[rando].dmg,
-        fxPlayer: playerDeck[rando].fxPlayer,
-        fxBoss: playerDeck[rando].fxBoss,
-        fxMinion: playerDeck[rando].fxMinion,
-        bonus: playerDeck[rando].bonus,
-        desc: playerDeck[rando].desc,
-      }
-    })
   }
 
   handleChoose(i) {
