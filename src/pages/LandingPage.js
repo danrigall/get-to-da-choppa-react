@@ -1,6 +1,6 @@
 import title from '../images/1-main.png'
 import headshot from '../images/gabe2.png'
-import heroes from './heroes'
+import heroes from '../cards/heroes'
 
 function Landing(props) {
   return (
@@ -36,7 +36,7 @@ function Landing(props) {
       <section id="hero-section">
         <h1>Da Heroes</h1>
         {heroes.map(h =>
-          <div className='hero-wrapper' onClick={props.onClick}>
+          <div className='hero-wrapper' onClick={props.onClick} key={heroes.indexOf(h)}>
             <h2>{h.name}</h2>
             <img src={h.img} alt={h.name} />
             <p>{h.desc}</p>
