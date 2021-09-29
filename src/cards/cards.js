@@ -35,11 +35,11 @@ const playerDeck = [
   { type: 1, name: 'Health Increase', img: skl_hp, hp: 1, str: 0, spd: 0, die: null, dmg: null, phase: null, fxPlayer: true, fxBoss: false, fxMinion: false, bonus: null, desc: '+1 HP', },
   { type: 1, name: 'Exploding Vehicle', img: xvehicle, hp: -10, str: 0, spd: 0, die: null, dmg: null, phase: 0, fxPlayer: true, fxBoss: false, fxMinion: false, bonus: null, desc: 'The vehicle you are driving suddenly erupts in flames. You are very badly burned but still alive… mostly.', },
   // Cards that affect both Minions and Bosses
-  { type: 1, name: 'Let Off Some Steam', img: steam, hp: -10, str: null, spd: null, die: null, dmg: null, phase: null, fxPlayer: false, fxBoss: true, fxMinion: true, bonus: '+5 additional Damage when employed against Bennett or his minions.', desc: 'What\'s better than boiling hot water? Boiling hot water vapor.', },
+  { type: 2, name: 'Let Off Some Steam', img: steam, hp: -10, str: null, spd: null, die: null, dmg: null, phase: null, fxPlayer: false, fxBoss: true, fxMinion: true, bonus: '+5 additional Damage when employed against Bennett or his minions.', desc: 'What\'s better than boiling hot water? Boiling hot water vapor.', },
   // Cards that only affect Minions
-  { type: 1, name: 'Nice Night for a Walk', img: nicenight, hp: -1000, str: null, spd: null, die: null, dmg: null, phase: null, fxPlayer: false, fxBoss: false, fxMinion: true, bonus: null, desc: 'That laundry isn\'t going to do itself. Play this card to take one minion out of play for the remainder of the game.', },
+  { type: 3, name: 'Nice Night for a Walk', img: nicenight, hp: -1000, str: null, spd: null, die: null, dmg: null, phase: null, fxPlayer: false, fxBoss: false, fxMinion: true, bonus: null, desc: 'That laundry isn\'t going to do itself. Play this card to take one minion out of play for the remainder of the game.', },
   // Cards that affect everyone
-  { type: 1, name: 'Minor Explosion', img: xplosion, hp: -5, str: 0, spd: 0, die: null, dmg: null, phase: 0, fxPlayer: true, fxBoss: true, fxMinion: true, bonus: null, desc: 'You get caught in a small explosion.', },
+  { type: 4, name: 'Minor Explosion', img: xplosion, hp: -5, str: 0, spd: 0, die: null, dmg: null, phase: 0, fxPlayer: true, fxBoss: true, fxMinion: true, bonus: null, desc: 'You get caught in a small explosion.', },
 ];
 
 export default playerDeck;

@@ -7,29 +7,45 @@ function PlayerSection(props) {
   const [deck, setDeck] = useState([...playerDeck]);
   const [card, setCard] = useState([1,2]);
   
+  // ! This whole function probably needs to be moved up to BattlegroundPage
+  const playCard = (c) => {
+    if (props.cardsPlayed > 2) {
+      alert('You already played 2 cards this round!');
+    } else {
+        // TODO: Add stats from card to different groups of who it affects
+        if (c.type === 0) {
+          alert('We got a weapon!')
+        } else if (c.type === 1) {
+          alert('Card only affects the player!')
+          props.hero.spd += c.spd
+          // TODO: figure out how to actually affect the hero stats...
+        } else if (c.type === 2) {
+          alert('Card affects all enemies!')
+        } else if (c.type === 3) {
+          alert('Card only affects minions!')
+        } else if (c.type === 4) {
+          alert('Card affects EVERYONE!')
+        }
+    }
+  }
+  
   const drawCard = () => {
     const rando = Math.floor(Math.random() * deck.length);
     const drawn = deck.slice(rando, rando + 1);
-    const take = deck.slice(0, rando).concat(deck.slice((rando+1), deck.length));
+    const remove = deck.slice(0, rando).concat(deck.slice((rando+1), deck.length));
     
     if (card[0] === 1) {
       setCard([drawn, card[1]].flat());
-      setDeck(take);
+      setDeck(remove);
+      (drawn.type === 2) && playCard(card[0]);
     } else if (card[1] === 2) {
       setCard([card[0], drawn].flat());
-      setDeck(take);
+      setDeck(remove);
+      (drawn.type === 2) && playCard(card[1]);
     } else {
       alert('You can\'t draw any more cards!');
     }
     console.log(card)
-  }
-  
-  const playCard = () => {
-    if (this.props.cardsPlayed > 2) {
-      alert('You already played 2 cards this round!');
-    } else {
-      alert('you got this')
-    }
   }
   
   return (
@@ -64,12 +80,11 @@ function PlayerSection(props) {
       {card.map(c =>
         <div
           className={!c ? 'card empty-card' : 'card'}
-          onClick={() => c && alert('you clicked a card!')}
           key={card.indexOf(c)}
           >
           {(typeof c == 'number')
           ? <p>{'Action Card ' + c.toString()}</p>
-          : <div className='action-card-stats'>
+          : <div className='action-card-stats' onClick={() => playCard(c)}>
               <img src={c.img} alt={c.name} />
               <h3>{c.name}</h3>
               <p>{c.desc}</p>
