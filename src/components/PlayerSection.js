@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import playerDeck from '../cards/cards';
-import heroes from '../cards/heroes';
+import playerDeck from '../decks/playerDeck';
+import heroDeck from '../decks/heroDeck';
 
 function PlayerSection(props) {
   
@@ -54,7 +54,7 @@ function PlayerSection(props) {
         <div id='choose-hero'>
           <h1>Choose Your Hero!</h1>
           <div id='battle-heroes'>
-            {heroes.map(h =>
+            {heroDeck.map(h =>
               <div
                 className='hero-wrapper'
                 onClick={() => props.onClick(h.key)}

@@ -13,7 +13,7 @@ import columbians from '../images/enemy/columbians.png'
 import muscle from '../images/enemy/thug.png'
 import jihadist from '../images/enemy/jihadist.png'
 
-const enemies = [
+const enemyDeck = [
   { type: 'boss', hp: 12, str: 6, spd: 10, name: 'Cohaagen', img: cohaagen, desc: 'A corporate dictator with a nasty temper, Vilos Cohaagen shortens every game by one round.', min: 6, },
   { type: 'boss', hp: 15, str: 8, spd: 10, name: 'Bennett', img: bennett, desc: 'A psychotic former commando, Bennett’s tactical skill allows his Minions to make an additional save throw if their first one fails.', min: 7, },
   { type: 'boss', hp: 18, str: 14, spd: 12, name: 'The Predator', img: predator, desc: 'An alien hunter. The ultimate predator. Loves hot weather.', min: 4, },
@@ -30,4 +30,4 @@ const enemies = [
   { type: 'minion', hp: 10, str: 5, spd: 7, name: 'Crimson Jihadist', img: jihadist, desc: 'Tired of all the other “warm and fuzzy” terrorist groups, these extremists formed their own, more extreme group: the Crimson Jihad.', min: 0, },
 ];
 
-export default enemies;
+export default enemyDeck;

@@ -1,7 +1,7 @@
 import React from 'react';
-import heroes from '../cards/heroes';
-import enemies from '../cards/enemies';
-import playerDeck from '../cards/cards';
+import heroDeck from '../decks/heroDeck';
+import enemyDeck from '../decks/enemyDeck';
+import playerDeck from '../decks/playerDeck';
 
 const battleState = {
   gamephase: 0,
@@ -33,14 +33,14 @@ class Battleground extends React.Component {
   
   revealEnemy() {
     if (this.state.gamephase < 2) {
-      let rando = Math.floor(Math.random() * enemies.length);
+      let rando = Math.floor(Math.random() * enemyDeck.length);
       this.setState({
         enemy: {
-          name: enemies[rando].name,
-          img: enemies[rando].img,
-          hp: enemies[rando].hp,
-          str: enemies[rando].str,
-          spd: enemies[rando].spd,
+          name: enemyDeck[rando].name,
+          img: enemyDeck[rando].img,
+          hp: enemyDeck[rando].hp,
+          str: enemyDeck[rando].str,
+          spd: enemyDeck[rando].spd,
         },
         gamephase: 2
       });
@@ -50,11 +50,11 @@ class Battleground extends React.Component {
   chooseHero(i) {
     this.setState({
       hero: {
-        name: heroes[i].name,
-        img: heroes[i].img,
-        hp: heroes[i].hp,
-        str: heroes[i].str,
-        spd: heroes[i].spd,
+        name: heroDeck[i].name,
+        img: heroDeck[i].img,
+        hp: heroDeck[i].hp,
+        str: heroDeck[i].str,
+        spd: heroDeck[i].spd,
       },
       gamephase: 1,
     })
@@ -187,7 +187,7 @@ class Battleground extends React.Component {
             <div id='choose-hero'>
               <h1>Choose Your Hero!</h1>
               <div id='battle-heroes'>
-                {heroes.map(h =>
+                {heroDeck.map(h =>
                   <div
                     className='hero-wrapper'
                     onClick={() => this.chooseHero(h.key)}
