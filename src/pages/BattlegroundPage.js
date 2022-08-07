@@ -3,6 +3,7 @@ import heroDeck from "../decks/heroDeck";
 import enemyDeck from "../decks/enemyDeck";
 import playerDeck from "../decks/playerDeck";
 import ActionCard from "../components/actionCard";
+import HeroCard from "../components/heroCard";
 
 const Battleground = () => {
   const [gamePhase, setGamePhase] = useState(0);
@@ -79,7 +80,9 @@ const Battleground = () => {
     } else {
       const availableSlot = [firstCard, secondCard].find(card => !card.stats)
       if (availableSlot) {
-        availableSlot.id === 1 ? setFirstCard({...firstCard, stats: drawn}) : setSecondCard({...secondCard, stats: drawn})
+        availableSlot.id === 1
+          ? setFirstCard({ ...firstCard, stats: drawn })
+          : setSecondCard({ ...secondCard, stats: drawn });
         setDeck(deckAfterDraw);
       } else {
         alert("You can't draw any more cards!");
@@ -146,14 +149,7 @@ const Battleground = () => {
             <div className="modal-bgd"></div>
           </div>
         )}
-        <div id="hero-card" className="card">
-          <h3>{hero.name}</h3>
-          <img src={hero.img} alt={hero.name} />
-          <p>Health: {hero.hp}</p>
-          <p>Strength: {hero.str}</p>
-          <p>Speed: {hero.spd}</p>
-          <p id="weapon">Weapon: {hero.wpn}</p>
-        </div>
+        <HeroCard hero={hero}/>
         <ActionCard card={firstCard} onClick={() => playCard(1)}/>
         <ActionCard card={secondCard} onClick={() => playCard(2)}/>
         <div id="action-deck" className="card" onClick={() => drawCard()}>

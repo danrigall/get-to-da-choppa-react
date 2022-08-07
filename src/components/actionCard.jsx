@@ -1,6 +1,4 @@
-const ActionCard: React.FC = (props) => {
-  const {card, onClick} = props
-  console.log('Card?', card)
+const ActionCard: React.FC = ({card, onClick}) => {
   return (
     <div className={!card.stats ? "card empty-card" : "card"}>
       {!card.stats ? (
