@@ -12,28 +12,25 @@ const Battleground = () => {
   const [cards, setCards] = useState([0, 1]);
   const [deck, setDeck] = useState([...playerDeck]);
 
+  const selectedCard = (deck, i) => {
+    return {
+      name: deck[i].name,
+      img: deck[i].img,
+      hp: deck[i].hp,
+      str: deck[i].str,
+      spd: deck[i].spd,
+    }
+  }
   const revealEnemy = () => {
     if (gamePhase < 2) {
       let rando = Math.floor(Math.random() * enemyDeck.length);
-      setEnemy({
-        name: enemyDeck[rando].name,
-        img: enemyDeck[rando].img,
-        hp: enemyDeck[rando].hp,
-        str: enemyDeck[rando].str,
-        spd: enemyDeck[rando].spd,
-      });
+      setEnemy(selectedCard(enemyDeck, rando));
       setGamePhase(2);
     }
   };
 
   const chooseHero = (i) => {
-    setHero({
-      name: heroDeck[i].name,
-      img: heroDeck[i].img,
-      hp: heroDeck[i].hp,
-      str: heroDeck[i].str,
-      spd: heroDeck[i].spd,
-    });
+    setHero(selectedCard(heroDeck, i));
     setGamePhase(1);
   };
 
@@ -42,33 +39,24 @@ const Battleground = () => {
       alert("You already played 2 cards this round!");
     } else {
       // TODO: Sort out what happens for auto-play cards
-      const affectEnemy = () => {
-        setEnemy({
-          ...enemy,
-          hp: card.hp + enemy.hp,
-          str: card.str + enemy.str,
-          spd: card.spd + enemy.spd,
-        });
-      };
-      const affectHero = () => {
-        setHero({
-          ...hero,
-          hp: card.hp + hero.hp,
-          str: card.str + hero.str,
-          spd: card.spd + hero.spd,
-        });
-      };
+      const cardEffectsApplied = (character) => {
+        return {
+          ...character,
+          hp: card.hp + character.hp,
+          str: card.str + character.str,
+          spd: card.spd + character.spd,
+        }
+      }
+
       if (card.type === 0) {
         setHero({ ...hero, wpn: card.name, dmg: card.dmg });
       } else if (card.type === 1) {
-        affectHero();
-      } else if (card.type === 2) {
-        affectEnemy();
-      } else if (card.type === 3 && enemy.type === "minion") {
-        affectEnemy();
+        setHero(cardEffectsApplied(hero))
+      } else if (card.type === 2 || (card.type === 3 && enemy.type === "minion")) {
+        setEnemy(cardEffectsApplied(enemy))
       } else if (card.type === 4) {
-        affectHero();
-        affectEnemy();
+        setHero(cardEffectsApplied(hero))
+        setEnemy(cardEffectsApplied(enemy))
       }
       const index = cards.indexOf(card);
       if (index === 0) {
@@ -81,11 +69,9 @@ const Battleground = () => {
   };
 
   const drawCard = () => {
-    const deck = deck;
-    const card = cards;
     const rando = Math.floor(Math.random() * deck.length);
     const drawn = deck[rando];
-    const remove = deck
+    const deckAfterDraw = deck
       .slice(0, rando)
       .concat(deck.slice(rando + 1, deck.length));
 
@@ -93,12 +79,12 @@ const Battleground = () => {
       alert("You must reveal your enemy first!");
     } else {
       if (drawn.gamePhase !== 0) {
-        if (card[0] === 0) {
-          setCards([drawn, card[1]]);
-          setDeck(remove);
-        } else if (card[1] === 1) {
-          setCards([card[0], drawn]);
-          setDeck(remove);
+        if (cards[0] === 0) {
+          setCards([drawn, cards[1]]);
+          setDeck(deckAfterDraw);
+        } else if (cards[1] === 1) {
+          setCards([cards[0], drawn]);
+          setDeck(deckAfterDraw);
         } else {
           alert("You can't draw any more cards!");
         }
