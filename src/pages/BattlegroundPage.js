@@ -4,6 +4,7 @@ import enemyDeck from "../decks/enemyDeck";
 import playerDeck from "../decks/playerDeck";
 import ActionCard from "../components/actionCard";
 import HeroCard from "../components/heroCard";
+import ChooseHeroModal from "../components/chooseHeroModal"
 
 const Battleground = () => {
   const [gamePhase, setGamePhase] = useState(0);
@@ -125,29 +126,13 @@ const Battleground = () => {
 
         <div id="kill-list" className="card">
           <h3>Kill List</h3>
-          <p id="emptyID">{cardsPlayed}</p>
+          <p id="emptyID">cards played: {cardsPlayed}</p>
         </div>
       </section>
 
       <section id="player-section">
         {gamePhase < 1 && (
-          <div id="choose-hero">
-            <h1>Choose Your Hero!</h1>
-            <div id="battle-heroes">
-              {heroDeck.map((h) => (
-                <div
-                  className="hero-wrapper"
-                  onClick={() => chooseHero(h.key)}
-                  key={h.key}
-                >
-                  <h2>{h.name}</h2>
-                  <img src={h.img} alt={h.name} />
-                  <p>{h.desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="modal-bgd"></div>
-          </div>
+          <ChooseHeroModal heroDeck={heroDeck} chooseHero={chooseHero}/>
         )}
         <HeroCard hero={hero}/>
         <ActionCard card={firstCard} onClick={() => playCard(1)}/>
