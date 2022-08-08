@@ -5,8 +5,10 @@ import playerDeck from "../decks/playerDeck";
 import ActionCard from "../components/actionCard";
 import HeroCard from "../components/heroCard";
 import ChooseHeroModal from "../components/chooseHeroModal"
+import EnemyCard from "../components/enemyCard"
 
 const Battleground = () => {
+  // TODO: I don't like this gamePhase stuff. Use bools instead?
   const [gamePhase, setGamePhase] = useState(0);
   const [cardsPlayed, setCardsPlayed] = useState(0);
   const [hero, setHero] = useState({});
@@ -39,7 +41,6 @@ const Battleground = () => {
   };
 
   const playCard = (cardId: number) => {
-    console.log("playCard()")
     const card = [firstCard, secondCard].find(card => card.id === cardId)
     if (cardsPlayed >= 2 && card.stats.gamePhase !== 0) {
       alert("You already played 2 cards this round!");
@@ -88,6 +89,9 @@ const Battleground = () => {
       } else {
         alert("You can't draw any more cards!");
       }
+      // Handle auto-played cards (ie. explosions)
+      // TODO: Add an "autoPlay" bool to cards.
+      // TODO: Even then, set card "down" first, then playCard()
       if (drawn.gamePhase !== 0) {
         return
       } else {
@@ -105,25 +109,7 @@ const Battleground = () => {
           <h3>Kill Count: </h3>
           <p>{"TODO: Create & Call killCount function"}</p>
         </div>
-
-        <div
-          id="enemy-card"
-          className={gamePhase < 2 ? "card empty-card" : "card"}
-          onClick={() => revealEnemy()}
-        >
-          {gamePhase < 2 ? (
-            <div>Reveal Enemy</div>
-          ) : (
-            <div id="enemy-stats">
-              <img src={enemy.img} alt={enemy.name} />
-              <h3>{enemy.name}</h3>
-              <p>Health: {enemy.hp}</p>
-              <p>Strength: {enemy.str}</p>
-              <p>Speed: {enemy.spd}</p>
-            </div>
-          )}
-        </div>
-
+        <EnemyCard enemy={enemy} onClick={revealEnemy}/>
         <div id="kill-list" className="card">
           <h3>Kill List</h3>
           <p id="emptyID">cards played: {cardsPlayed}</p>
