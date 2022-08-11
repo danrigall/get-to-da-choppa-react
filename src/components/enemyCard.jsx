@@ -1,12 +1,11 @@
 const EnemyCard: React.FC = ({ enemy, onClick }) => {
-  const noEnemy: boolean = enemy === {};
   return (
     <div
       id="enemy-card"
-      className={noEnemy ? "card empty-card" : "card"}
+      className={!enemy ? "card empty-card" : "card"}
       onClick={onClick}
     >
-      {noEnemy ? (
+      {!enemy ? (
         <div>Reveal Enemy</div>
       ) : (
         <div id="enemy-stats">
