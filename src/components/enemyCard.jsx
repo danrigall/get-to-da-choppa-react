@@ -3,10 +3,13 @@ const EnemyCard: React.FC = ({ enemy, onClick }) => {
     <div
       id="enemy-card"
       className={!enemy ? "card empty-card" : "card"}
-      onClick={onClick}
     >
       {!enemy ? (
-        <div>Reveal Enemy</div>
+        <div id="enemy-stats" onClick={onClick}>
+          <p>
+          Reveal Enemy
+          </p>
+        </div>
       ) : (
         <div id="enemy-stats">
           <img src={enemy.img} alt={enemy.name} />

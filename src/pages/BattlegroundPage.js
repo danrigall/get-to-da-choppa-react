@@ -8,7 +8,6 @@ import ChooseHeroModal from "../components/chooseHeroModal";
 import EnemyCard from "../components/enemyCard";
 
 const Battleground = () => {
-  // TODO: I don't like this gamePhase stuff. Use bools instead?
   const [cardsPlayed, setCardsPlayed] = useState(0);
   const [hero, setHero] = useState();
   const [enemy, setEnemy] = useState();
@@ -18,13 +17,11 @@ const Battleground = () => {
   const [deck, setDeck] = useState([...playerDeck]);
 
   const randomIndex: number = (array: []) => {
-    Math.floor(Math.random() * enemyDeck.length);
+    return Math.floor(Math.random() * array.length);
   };
 
   const revealEnemy = () => {
-    if (!enemy) {
       setEnemy(enemyDeck[randomIndex(enemyDeck)]);
-    }
   };
 
   const chooseHero = (i) => {
@@ -45,7 +42,8 @@ const Battleground = () => {
           spd: card.stats.spd + character.spd,
         };
       };
-
+      // TODO: Handle card types w/ affectHero, etc.
+      // TODO: OR use descriptive strings for types.
       if (card.stats.type === 0) {
         setHero({ ...hero, wpn: card.stats.name, dmg: card.stats.dmg });
       } else if (card.stats.type === 1) {
