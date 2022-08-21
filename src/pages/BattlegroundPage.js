@@ -29,38 +29,37 @@ const Battleground = () => {
   };
 
   const playCard = (card: any) => {
-    console.log("playCard():", card);
     if (cardsPlayed >= 2) {
       alert("You already played 2 cards this round!");
     } else {
+      const { cardData } = card
       // TODO: autoPlay cards must show!
       const cardEffectsApplied = (character) => {
         return {
           ...character,
-          hp: card.stats.hp + character.hp,
-          str: card.stats.str + character.str,
-          spd: card.stats.spd + character.spd,
+          hp: cardData.hp + character.hp,
+          str: cardData.str + character.str,
+          spd: cardData.spd + character.spd,
         };
       };
-      // TODO: Handle card types w/ affectHero, etc.
-      // TODO: OR use descriptive strings for types.
-      if (card.stats.type === 0) {
-        setHero({ ...hero, wpn: card.stats.name, dmg: card.stats.dmg });
-      } else if (card.stats.type === 1) {
+      // TODO: Change with card stats (or maybe not???)
+      if (cardData.type === "weapon") {
+        setHero({ ...hero, wpn: cardData });
+      } else if (cardData.type === "player") {
         setHero(cardEffectsApplied(hero));
       } else if (
-        card.stats.type === 2 ||
-        (card.stats.type === 3 && enemy.type === "minion")
+        cardData.type === "enemies" ||
+        (cardData.type === "minion" && enemy.type === "minion")
       ) {
         setEnemy(cardEffectsApplied(enemy));
-      } else if (card.stats.type === 4) {
+      } else if (cardData.type === "everyone") {
         setHero(cardEffectsApplied(hero));
         setEnemy(cardEffectsApplied(enemy));
       }
+      // Reset the appropriate card spot.
       if (card.id === 1) {
         setFirstCard({ id: 1 });
-      }
-      if (card.id === 2) {
+      } else {
         setSecondCard({ id: 2 });
       }
       setCardsPlayed(cardsPlayed + 1);
@@ -76,11 +75,11 @@ const Battleground = () => {
     if (!enemy) {
       alert("You must reveal your enemy first!");
     } else {
-      const availableSlot = actionCards.find((card) => !card.stats);
+      const availableSlot = actionCards.find((card) => !card.cardData);
       if (availableSlot) {
         availableSlot.id === 1
-          ? setFirstCard({ ...firstCard, stats: drawn })
-          : setSecondCard({ ...secondCard, stats: drawn });
+          ? setFirstCard({ ...firstCard, cardData: drawn })
+          : setSecondCard({ ...secondCard, cardData: drawn });
         setDeck(deckAfterDraw);
       } else {
         alert("You can't draw any more cards!");
@@ -92,9 +91,9 @@ const Battleground = () => {
   useEffect(() => {
     console.log("useEffect...");
     setActionCards([firstCard, secondCard]);
-    if (firstCard.stats?.autoPlay) {
+    if (firstCard.cardData?.autoPlay) {
       playCard(firstCard);
-    } else if (secondCard.stats?.autoPlay) {
+    } else if (secondCard.cardData?.autoPlay) {
       playCard(secondCard);
     }
   }, [firstCard, secondCard]);
