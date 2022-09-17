@@ -22,9 +22,9 @@ h1 {
   grid-template-columns: 100vw;
   grid-template-rows: 80px auto;
   grid-template-areas:
-      "hd"
-      "main"
-      "ft";
+    "hd"
+    "main"
+    "ft";
   font-family: $font-one;
   min-width: 481px;
   background: url('./images/camo1.png')
@@ -104,6 +104,7 @@ header {
       font-size: 2.5vw;
       padding: 2%;
     }
+
     @media screen and (min-width: 1440px) {
       p {
         font-size: 36px;
@@ -118,9 +119,11 @@ header {
       height: 5rem;
       width: 5rem;
       border-radius: 3rem;
+
       &:hover {
         background-color: hotpink;
       }
+
       &:focus {
         outline: none;
       }
@@ -160,24 +163,16 @@ header {
   }
 }
 
-#choose-hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-
-  h1 {
-    width: 100%;
-    z-index: inherit;
-    background: none;
-    color: white;
-    text-align: center;
-  }
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
 
   .modal-bgd {
     position: absolute;
@@ -187,46 +182,55 @@ header {
     height: 100%;
   }
 
-  #battle-heroes {
+  .modal-foreground {
     display: flex;
     justify-content: center;
     width: 100%;
     z-index: 2;
     margin-bottom: 100px;
+  }
+}
 
-    .hero-wrapper {
-      width: 180px;
-      height: 240px;
-      margin: 0px 20px;
-      border: 5px solid whitesmoke;
-      border-radius: 10px;
-      padding: 10px;
-      box-sizing: border-box;
-      background-color: $color-two;
-      overflow: hidden;
+#battle-heroes {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 2;
+  margin-bottom: 100px;
 
-      &:hover {
-        background-color: $color-three;
-        cursor: pointer;
-      }
+  .hero-wrapper {
+    width: 180px;
+    height: 240px;
+    margin: 0px 20px;
+    border: 5px solid whitesmoke;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: $color-two;
+    overflow: hidden;
 
-      h2 {
-        font-size: 1.2rem;
-        line-height: 1;
-        padding-bottom: 5px;
-      }
+    &:hover {
+      background-color: $color-three;
+      cursor: pointer;
+    }
 
-      img {
-        width: 100%;
-      }
+    h2 {
+      font-size: 1.2rem;
+      line-height: 1;
+      padding-bottom: 5px;
+    }
 
-      p {
-        white-space: break-spaces;
-        line-height: 120%;
-      }
+    img {
+      width: 100%;
+    }
+
+    p {
+      white-space: break-spaces;
+      line-height: 120%;
     }
   }
 }
+
 
 #makers {
   img {
@@ -264,7 +268,7 @@ header {
     img {
       width: 100%;
     }
-    
+
     .action-card-stats {
       height: 100%;
     }
@@ -278,6 +282,7 @@ header {
     align-items: center;
     border: 2px dashed black;
     background-color: rgba(80, 80, 80, 0.5);
+
     &:hover {
       transition: 500ms;
       background-color: $color-two;
@@ -288,11 +293,11 @@ header {
       height: 100%;
       width: 100%;
       display: flex;
-    justify-content: center;
-    align-items: center;
+      justify-content: center;
+      align-items: center;
     }
   }
-  
+
   // .action-card {
   //   border: 2px dashed lightgray;
   //   border-radius: 10px;
