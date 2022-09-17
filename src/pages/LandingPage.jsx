@@ -1,15 +1,16 @@
+import React from "react"
 import title from '../images/1-main.png'
-import headshot from '../images/gabe2.png'
+import headShot from '../images/gabe2.png'
 import heroDeck from '../decks/heroDeck'
 
-function Landing(props) {
+const Landing: React.FC = ({onClick}) => {
   return (
     <main id="main-landing">
       <section id="intro-section">
         <img src={title} alt='arnold with gun' />
         <div id="intro">
           <p>Welcome, men and women to the most brutal battle game of all time! If you think you are man or woman enough to face the most villainous super-villains of the 1980s and -90s, then push da button...</p>
-          <button onClick={props.onClick}>GO</button>
+          <button onClick={onClick}>GO</button>
         </div>
       </section>
       <section id="rules">
@@ -36,7 +37,7 @@ function Landing(props) {
       <section id="hero-section">
         <h1>Da Heroes</h1>
         {heroDeck.map(h =>
-          <div className='hero-wrapper' onClick={props.onClick} key={heroDeck.indexOf(h)}>
+          <div className='hero-wrapper' onClick={onClick} key={heroDeck.indexOf(h)}>
             <h2>{h.name}</h2>
             <img src={h.img} alt={h.name} />
             <p>{h.desc}</p>
@@ -50,7 +51,7 @@ function Landing(props) {
       </section>
       <section id="makers">
         <h1>Da Maker</h1>
-        <img src={headshot} alt="Gabe headshot" />
+        <img src={headShot} alt="Gabe head shot" />
         <p>Gabe Rigall is an independent programmer/web developer/data analyst/machine learning enthusiast/evil genius who grew up watching Arnold Schwarzenegger movies and playing card, board, and videogames. The inspiration for "Get to Da Choppa" came after a particularly riveting bout of "Marrying Mr. Darcy" wherein his wife soundly beat him to the punch (pun intended).</p>
         {/* <button>Close</button> */}
       </section>

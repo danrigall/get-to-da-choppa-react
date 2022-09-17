@@ -1,4 +1,8 @@
-const EnemyCard: React.FC = ({ enemy, onClick }) => {
+type EnemyCardProps = {
+  enemy: any;
+  onClick: VoidFunction
+}
+const EnemyCard: React.FC<EnemyCardProps> = ({ enemy, onClick }) => {
   return (
     <div
       id="enemy-card"

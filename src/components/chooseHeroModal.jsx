@@ -1,4 +1,9 @@
-const ChooseHeroModal: React.FC = ({ heroDeck, chooseHero }) => {
+type HeroModalProps = {
+  heroDeck: any;
+  chooseHero: (i: number) => void;
+}
+
+const ChooseHeroModal: React.FC<HeroModalProps> = ({ heroDeck, chooseHero }) => {
   return (
     <div id="choose-hero">
       <h1>Choose Your Hero!</h1>

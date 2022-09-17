@@ -1,17 +1,22 @@
-const ActionCard: React.FC = ({card, onClick}) => {
-  return (
-    <div className={!card.stats ? "card empty-card" : "card"}>
-      {!card.stats ? (
-        <p>{`Action Card ${card.id}`}</p>
-      ) : (
-        <div className="action-card-stats" onClick={onClick}>
-          <img src={card.stats.img} alt={card.stats.name} />
-          <h3>{card.stats.name}</h3>
-          <p>{card.stats.desc}</p>
-        </div>
-      )}
-    </div>
-  );
-};
+type ActionCardProps = {
+	card: any,
+	onClick: () => void,
+}
 
-export default ActionCard;
+const ActionCard: React.FC<ActionCardProps> = ({ card, onClick }) => {
+	return (
+		<div className={!card.cardData ? "card empty-card" : "card"}>
+			{!card.cardData ? (
+				<p>{`Action Card ${card.id}`}</p>
+			) : (
+				<div className="action-card-stats" onClick={onClick}>
+					<img src={card.cardData.img} alt={card.cardData.name} />
+					<h3>{card.cardData.name}</h3>
+					<p>{card.cardData.desc}</p>
+				</div>
+			)}
+		</div>
+	)
+}
+
+export default ActionCard
