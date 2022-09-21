@@ -6,7 +6,7 @@ type ActionCardProps = {
 const ActionCard: React.FC<ActionCardProps> = ({ card, onClick }) => {
 	return (
 		<div className={!card.cardData ? "card empty-card" : "card"}>
-			{!card.cardData ? (
+			{!card.cardData || card.cardData?.autoPlay ? (
 				<p>{`Action Card ${card.id}`}</p>
 			) : (
 				<div className="action-card-stats" onClick={onClick}>

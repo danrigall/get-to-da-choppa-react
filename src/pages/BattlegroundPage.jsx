@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
-import heroDeck from "../decks/heroDeck"
 import enemyDeck from "../decks/enemyDeck"
 import playerDeck from "../decks/playerDeck"
 import ActionCard from "../components/actionCard"
 import HeroCard from "../components/heroCard"
 import EnemyCard from "../components/enemyCard"
-import Modal from "../components/modal"
+import ChooseHeroModal from "../components/chooseHeroModal"
+import AutoPlayModal from "../components/autoPlayModal"
 
 const Battleground = () => {
 	const [cardsPlayed, setCardsPlayed] = useState(0)
@@ -25,9 +25,7 @@ const Battleground = () => {
 		setEnemy(enemyDeck[randomIndex(enemyDeck.length)])
 	}
 
-	const chooseHero = (i) => {
-		setHero(heroDeck[i])
-	}
+	const chooseHero = (chosen) => setHero(chosen)
 
 	const playCard = (card: any) => {
 		console.log("playCard()", card)
@@ -91,16 +89,19 @@ const Battleground = () => {
 		}
 	}
 
+	const handleAutoPlayed = (card: any) => {
+		playCard(card)
+		setViewCard(null)
+	}
+
 	// Handle autoPlay cards (ie. explosions)
 	useEffect(() => {
 		console.log("useEffect...")
 		setActionCards([firstCard, secondCard])
 		if (firstCard.cardData?.autoPlay) {
 			setViewCard(firstCard)
-			// playCard(firstCard)
 		} else if (secondCard.cardData?.autoPlay) {
 			setViewCard(secondCard)
-			// playCard(secondCard)
 		}
 	}, [firstCard, secondCard])
 
@@ -119,28 +120,7 @@ const Battleground = () => {
 			</section>
 
 			<section id="player-section">
-				{!hero && (
-					<Modal
-						foreground={
-							<div>
-								<h1>Choose Your Hero!</h1>
-								<div id="battle-heroes">
-									{heroDeck.map((hero) => (
-										<div
-											className="hero-wrapper"
-											onClick={() => chooseHero(hero.key)}
-											key={hero.key}
-										>
-											<h2>{hero.name}</h2>
-											<img src={hero.img} alt={hero.name} />
-											<p>{hero.desc}</p>
-										</div>
-									))}
-								</div>
-							</div>
-						}
-					/>
-				)}
+				{!hero && <ChooseHeroModal chooseHero={chooseHero} />}
 				<HeroCard hero={hero} />
 				<ActionCard card={firstCard} onClick={() => playCard(firstCard)} />
 				<ActionCard card={secondCard} onClick={() => playCard(secondCard)} />
@@ -149,22 +129,9 @@ const Battleground = () => {
 				</div>
 			</section>
 			{!!viewCard && (
-				<Modal
-					foreground={
-						<div className="card">
-							<div
-								className="action-card-stats"
-								onClick={() => {
-									playCard(viewCard)
-									setViewCard(null)
-								}}
-							>
-								<img src={viewCard.cardData.img} alt={viewCard.cardData.name} />
-								<h3>{viewCard.cardData.name}</h3>
-								<p>{viewCard.cardData.desc}</p>
-							</div>
-						</div>
-					}
+				<AutoPlayModal
+					viewCard={viewCard}
+					handleAutoPlayed={handleAutoPlayed}
 				/>
 			)}
 		</main>

@@ -165,7 +165,6 @@ header {
 
 .modal {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   position: absolute;
   top: 0;
@@ -184,10 +183,13 @@ header {
 
   .modal-foreground {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
     z-index: 2;
-    margin-bottom: 100px;
+    h1 {
+        text-align: center;
+      }
   }
 }
 
