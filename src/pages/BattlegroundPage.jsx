@@ -25,8 +25,6 @@ const Battleground = () => {
 		setEnemy(enemyDeck[randomIndex(enemyDeck.length)])
 	}
 
-	const chooseHero = (chosen) => setHero(chosen)
-
 	const playCard = (card: any) => {
 		console.log("playCard()", card)
 		if (cardsPlayed >= 2) {
@@ -89,6 +87,25 @@ const Battleground = () => {
 		}
 	}
 
+	const attack = () => {
+		const heroIsFaster: boolean = hero.spd > enemy.spd
+		const heroAttacks = () => {
+			alert("You attack the enemy for SOMETHING HP")
+			setEnemy({ ...enemy, hp: enemy.hp - hero.str })
+		}
+		const enemyAttacks = () => {
+			alert("The enemy attacks you for SOMETHING HP")
+			setHero({ ...hero, hp: hero.hp - enemy.str })
+		}
+		if (heroIsFaster) {
+			heroAttacks()
+			enemyAttacks()
+		} else {
+			enemyAttacks()
+			heroAttacks()
+		}
+	}
+
 	const handleAutoPlayed = (card: any) => {
 		playCard(card)
 		setViewCard(null)
@@ -120,13 +137,18 @@ const Battleground = () => {
 			</section>
 
 			<section id="player-section">
-				{!hero && <ChooseHeroModal chooseHero={chooseHero} />}
+				{!hero && <ChooseHeroModal chooseHero={(chosen) => setHero(chosen)} />}
 				<HeroCard hero={hero} />
 				<ActionCard card={firstCard} onClick={() => playCard(firstCard)} />
 				<ActionCard card={secondCard} onClick={() => playCard(secondCard)} />
 				<div id="action-deck" className="card" onClick={() => drawCard()}>
 					<p>Action Card Deck</p>
 				</div>
+			</section>
+
+			<section id="kill-buttons">
+				<button onClick={attack}>Attack</button>
+				{/* <button>Defend</button> */}
 			</section>
 			{!!viewCard && (
 				<AutoPlayModal
