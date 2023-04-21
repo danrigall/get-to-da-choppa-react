@@ -7,6 +7,7 @@ import EnemyCard from "../components/enemyCard"
 import ChooseHeroModal from "../components/chooseHeroModal"
 import AutoPlayModal from "../components/autoPlayModal"
 
+// TODO: Figure out how to get reviewers.
 const Battleground = () => {
 	const [cardsPlayed, setCardsPlayed] = useState(0)
 	const [hero, setHero] = useState()
