@@ -1,326 +1,351 @@
-$font-one: 'Oswald', sans-serif;
-$font-two: 'Iceberg', Arial, Helvetica, sans-serif;
-$font-three: 'Black Ops One', Impact, 'Arial Narrow Bold', sans-serif;
+$font-one: "Oswald", sans-serif;
+$font-two: "Iceberg", Arial, Helvetica, sans-serif;
+$font-three: "Black Ops One", Impact, "Arial Narrow Bold", sans-serif;
 
 $color-one: #222;
 $color-two: #555;
 $color-three: darkolivegreen;
 
 * {
-  margin: 0;
+	margin: 0;
 }
 
 h1 {
-  font-family: $font-three;
-  font-weight: lighter;
-  font-size: 2rem;
-  background-color: gray;
+	font-family: $font-three;
+	font-weight: lighter;
+	font-size: 2rem;
+	background-color: gray;
 }
 
 #game {
-  display: grid;
-  grid-template-columns: 100vw;
-  grid-template-rows: 80px auto;
-  grid-template-areas:
-    "hd"
-    "main"
-    "ft";
-  font-family: $font-one;
-  min-width: 481px;
-  background: url('./images/camo1.png')
+	display: grid;
+	grid-template-columns: 100vw;
+	grid-template-rows: 80px auto 28px;
+	grid-template-areas:
+		"hd"
+		"main"
+		"ft";
+	font-family: $font-one;
+	height: 100vh;
+	min-width: 481px;
+	background: url("./images/camo1.png");
 }
 
 header {
-  grid-area: hd;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  box-shadow: 0px 0px 6px;
-  z-index: 1;
+	grid-area: hd;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	box-shadow: 0px 0px 6px;
+	z-index: 1;
 
-  h1 {
-    width: 100%;
-    text-align: center;
-    font-size: inherit;
-    background-color: inherit;
-  }
+	h1 {
+		width: 100%;
+		text-align: center;
+		font-size: inherit;
+		background-color: inherit;
+	}
 
-  h2 {
-    text-align: center;
-    font-weight: lighter;
-  }
+	h2 {
+		text-align: center;
+		font-weight: lighter;
+	}
 }
 
 #landing-header {
-  background-color: $color-three;
-  font-size: 3.5rem;
+	background-color: $color-three;
+	font-size: 3.5rem;
 }
 
 #battle-header {
-  background-color: gray;
-  font-family: $font-three;
-  font-size: 1.5rem;
-  padding: 0px 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+	background-color: gray;
+	font-family: $font-three;
+	font-size: 1.5rem;
+	padding: 0px 10px;
+	box-sizing: border-box;
+	margin-bottom: 10px;
 
-  h1 {
-    font-size: 2.5rem;
-    white-space: nowrap;
-  }
+	h1 {
+		font-size: 2.5rem;
+		white-space: nowrap;
+	}
 
-  h2:hover {
-    color: white;
-    cursor: pointer;
-  }
+	h2:hover {
+		color: white;
+		cursor: pointer;
+	}
 }
 
 #intro-section {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  overflow: hidden;
-  background-color: black;
-  max-height: 320px;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	overflow: hidden;
+	background-color: black;
+	max-height: 320px;
 
-  img {
-    height: 100%;
-    // max-height: 20rem;
-    width: 40vw;
-  }
+	img {
+		height: 100%;
+		// max-height: 20rem;
+		width: 40vw;
+	}
 
-  #intro {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 20px;
-    background-color: #555;
-    min-width: 40vw;
+	#intro {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding: 20px;
+		background-color: #555;
+		min-width: 40vw;
 
-    p {
-      font-family: $font-two;
-      text-align: justify;
-      color: $color-one;
-      font-size: 2.5vw;
-      padding: 2%;
-    }
+		p {
+			font-family: $font-two;
+			text-align: justify;
+			color: $color-one;
+			font-size: 2.5vw;
+			padding: 2%;
+		}
 
-    @media screen and (min-width: 1440px) {
-      p {
-        font-size: 36px;
-      }
-    }
+		@media screen and (min-width: 1440px) {
+			p {
+				font-size: 36px;
+			}
+		}
 
-    button {
-      background-color: red;
-      color: darkred;
-      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-      font-size: 1.5rem;
-      height: 5rem;
-      width: 5rem;
-      border-radius: 3rem;
+		button {
+			background-color: red;
+			color: darkred;
+			font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+			font-size: 1.5rem;
+			height: 5rem;
+			width: 5rem;
+			border-radius: 3rem;
 
-      &:hover {
-        background-color: hotpink;
-      }
+			&:hover {
+				background-color: hotpink;
+			}
 
-      &:focus {
-        outline: none;
-      }
-    }
-  }
+			&:focus {
+				outline: none;
+			}
+		}
+	}
 }
 
 #hero-section {
-  display: flex;
-  flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 
-  h1 {
-    width: 100%;
-  }
+	h1 {
+		width: 100%;
+	}
 
-  .hero-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-height: 500px;
-    border: 3px solid green;
-    background-color: darkgray;
+	.hero-wrapper {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		max-height: 500px;
+		border: 3px solid green;
+		background-color: darkgray;
 
-    h2 {
-      height: 100%;
-      padding: 1%;
-    }
+		h2 {
+			height: 100%;
+			padding: 1%;
+		}
 
-    img {
-      width: 40vw;
-    }
+		img {
+			width: 40vw;
+		}
 
-    p {
-      padding: 5%;
-      white-space: break-spaces;
-    }
-  }
+		p {
+			padding: 5%;
+			white-space: break-spaces;
+		}
+	}
 }
 
 .modal {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1;
 
-  .modal-bgd {
-    position: absolute;
-    background: black;
-    opacity: 0.7;
-    width: 100%;
-    height: 100%;
-  }
+	.modal-bgd {
+		position: absolute;
+		background: black;
+		opacity: 0.7;
+		width: 100%;
+		height: 100%;
+	}
 
-  .modal-foreground {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    z-index: 2;
-    h1 {
-        text-align: center;
-      }
-  }
+	.modal-foreground {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		z-index: 2;
+		h1 {
+			text-align: center;
+		}
+	}
 }
 
 #battle-heroes {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  z-index: 2;
-  margin-bottom: 100px;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	z-index: 2;
+	margin-bottom: 100px;
 
-  .hero-wrapper {
-    width: 180px;
-    height: 240px;
-    margin: 0px 20px;
-    border: 5px solid whitesmoke;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: $color-two;
-    overflow: hidden;
+	.hero-wrapper {
+		width: 180px;
+		height: 240px;
+		margin: 0px 20px;
+		border: 5px solid whitesmoke;
+		border-radius: 10px;
+		padding: 10px;
+		box-sizing: border-box;
+		background-color: $color-two;
+		overflow: hidden;
 
-    &:hover {
-      background-color: $color-three;
-      cursor: pointer;
-    }
+		&:hover {
+			background-color: $color-three;
+			cursor: pointer;
+		}
 
-    h2 {
-      font-size: 1.2rem;
-      line-height: 1;
-      padding-bottom: 5px;
-    }
+		h2 {
+			font-size: 1.2rem;
+			line-height: 1;
+			padding-bottom: 5px;
+		}
 
-    img {
-      width: 100%;
-    }
+		img {
+			width: 100%;
+		}
 
-    p {
-      white-space: break-spaces;
-      line-height: 120%;
-    }
+		p {
+			white-space: break-spaces;
+			line-height: 120%;
+		}
+	}
+}
+
+.attack-button {
+	background-color: red;
+	height: 100px;
+	width: 100px;
+	border-radius: 100px;
+  margin: 0px 20px;
+  &:disabled {
+    background-color: #555;
   }
 }
 
+.defend-button {
+	background-color: cadetblue;
+	height: 100px;
+	width: 100px;
+	border-radius: 100px;
+  margin: 0px 20px;
+  &:disabled {
+    background-color: #555;
+  }
+}
 
 #makers {
-  img {
-    max-width: 100%;
-    width: 100px;
-    border-radius: 8px;
-  }
+	img {
+		max-width: 100%;
+		width: 100px;
+		border-radius: 8px;
+	}
 }
 
 #battle {
-  height: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 
-  section {
-    min-height: 40vh;
-    display: flex;
-    justify-content: center;
-    padding: 10px 20vw;
-  }
+	section {
+		display: flex;
+		justify-content: center;
+		padding: 10px 20vw;
+	}
 
-  .card {
-    width: 180px;
-    height: 240px;
-    min-width: 180px;
-    margin: 0px 20px;
-    border: 5px solid whitesmoke;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: $color-two;
+	.card {
+		width: 180px;
+		height: 240px;
+		min-width: 180px;
+		margin: 0px 20px;
+		border: 5px solid whitesmoke;
+		border-radius: 10px;
+		padding: 10px;
+		box-sizing: border-box;
+		background-color: $color-two;
 
-    h3 {
-      border-bottom: 1px solid darkgray;
-    }
+		h3 {
+			border-bottom: 1px solid darkgray;
+		}
 
-    img {
-      width: 100%;
-    }
+		img {
+			width: 100%;
+		}
 
-    .action-card-stats {
-      height: 100%;
-    }
-  }
+		.action-card-stats {
+			height: 100%;
+		}
+	}
 
-  .empty-card {
-    transition: 200ms;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    border: 2px dashed black;
-    background-color: rgba(80, 80, 80, 0.5);
+	.empty-card {
+		transition: 200ms;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		border: 2px dashed black;
+		background-color: rgba(80, 80, 80, 0.5);
 
-    &:hover {
-      transition: 500ms;
-      background-color: $color-two;
-      border: 2px solid black;
-    }
+		&:hover {
+			transition: 500ms;
+			background-color: $color-two;
+			border: 2px solid black;
+		}
 
-    #enemy-stats {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+		#enemy-stats {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 
-  // .action-card {
-  //   border: 2px dashed lightgray;
-  //   border-radius: 10px;
-  //   color: lightgray;
-  //   width: 180px;
-  //   height: 240px;
-  //   margin: 0px 20px;
-  //   padding: 10px;
-  //   box-sizing: border-box;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   background-color: rgba(80, 80, 80, 0.5);
-  // }
+	// .action-card {
+	//   border: 2px dashed lightgray;
+	//   border-radius: 10px;
+	//   color: lightgray;
+	//   width: 180px;
+	//   height: 240px;
+	//   margin: 0px 20px;
+	//   padding: 10px;
+	//   box-sizing: border-box;
+	//   display: flex;
+	//   justify-content: center;
+	//   align-items: center;
+	//   background-color: rgba(80, 80, 80, 0.5);
+	// }
 }
 
 #page-footer {
-  grid-area: ft;
-  color: $color-two;
-  width: 100%;
-  text-align: center;
-  font-size: 0.8rem;
-  margin: 10px;
+	grid-area: ft;
+	color: $color-two;
+	width: 100%;
+	text-align: center;
+	font-size: 0.8rem;
+	padding: 4px;
 }

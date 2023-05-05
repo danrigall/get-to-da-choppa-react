@@ -87,77 +87,113 @@ const Battleground = () => {
 		}
 	}
 
-	const attack = () => {
+	const calculateHp = (defender, attacker) => {
+		let hpAfterAttack = defender - attacker
+		if (hpAfterAttack < 0) {
+			hpAfterAttack = 0
+		}
+		return hpAfterAttack
+	}
+
+	const heroAttacks = () => {
+		return Promise.resolve()
+			.then(() => alert(`You attack the enemy for ${hero.str} HP`))
+			.then(() => {
+				setEnemy({ ...enemy, hp: calculateHp(enemy.hp, hero.str) })
+			})
+	}
+
+	const enemyAttacks = () => {
+		return Promise.resolve()
+			.then(() => alert(`The enemy attacks you for ${enemy.str} HP`))
+			.then(() => {
+				setHero({ ...hero, hp: calculateHp(hero.hp, enemy.str) })
+			})
+	}
+
+	const attack = async () => {
 		const heroIsFaster: boolean = hero.spd > enemy.spd
-		const heroAttacks = () => {
-			alert("You attack the enemy for SOMETHING HP")
-			setEnemy({ ...enemy, hp: enemy.hp - hero.str })
-		}
-		const enemyAttacks = () => {
-			alert("The enemy attacks you for SOMETHING HP")
-			setHero({ ...hero, hp: hero.hp - enemy.str })
-		}
+
 		if (heroIsFaster) {
-			heroAttacks()
-			enemyAttacks()
+			await heroAttacks()
+			await enemyAttacks()
 		} else {
-			enemyAttacks()
-			heroAttacks()
+			await enemyAttacks()
+			await heroAttacks()
 		}
 	}
+const handleAutoPlayed = (card: any) => {
+	playCard(card)
+	setViewCard(null)
+}
 
-	const handleAutoPlayed = (card: any) => {
-		playCard(card)
-		setViewCard(null)
+// Handle autoPlay cards (ie. explosions)
+useEffect(() => {
+	console.log("useEffect...")
+	setActionCards([firstCard, secondCard])
+	if (firstCard.cardData?.autoPlay) {
+		setViewCard(firstCard)
+	} else if (secondCard.cardData?.autoPlay) {
+		setViewCard(secondCard)
 	}
+}, [firstCard, secondCard])
 
-	// Handle autoPlay cards (ie. explosions)
-	useEffect(() => {
-		console.log("useEffect...")
-		setActionCards([firstCard, secondCard])
-		if (firstCard.cardData?.autoPlay) {
-			setViewCard(firstCard)
-		} else if (secondCard.cardData?.autoPlay) {
-			setViewCard(secondCard)
-		}
-	}, [firstCard, secondCard])
+useEffect(() => {
+	if (hero?.hp === 0) {
+		// TODO: Make an actual game over modal.
+		alert("GAME OVER")
+	}
+	if (enemy?.hp === 0) {
+		Promise.resolve()
+			.then(() => alert("You got him!"))
+			.then(() => {
+				revealEnemy()
+			})
+	}
+}, [hero, enemy])
 
-	return (
-		<main id="battle">
-			<section id="enemy-section">
-				<div id="kill-count" className="card">
-					<h3>Kill Count: </h3>
-					<p>{"TODO: Create & Call killCount function"}</p>
-				</div>
-				<EnemyCard enemy={enemy} onClick={revealEnemy} />
-				<div id="kill-list" className="card">
-					<h3>Kill List</h3>
-					<p id="emptyID">cards played: {cardsPlayed}</p>
-				</div>
-			</section>
+return (
+	<main id="battle">
+		<section id="enemy-section">
+			<div id="kill-count" className="card">
+				<h3>Kill Count: </h3>
+				<p>{"TODO: Create & Call killCount function"}</p>
+			</div>
+			<EnemyCard enemy={enemy} onClick={revealEnemy} />
+			<div id="kill-list" className="card">
+				<h3>Kill List</h3>
+				<p id="emptyID">cards played: {cardsPlayed}</p>
+			</div>
+		</section>
 
-			<section id="player-section">
-				{!hero && <ChooseHeroModal chooseHero={(chosen) => setHero(chosen)} />}
-				<HeroCard hero={hero} />
-				<ActionCard card={firstCard} onClick={() => playCard(firstCard)} />
-				<ActionCard card={secondCard} onClick={() => playCard(secondCard)} />
-				<div id="action-deck" className="card" onClick={() => drawCard()}>
-					<p>Action Card Deck</p>
-				</div>
-			</section>
+		<section>
+			<button className="attack-button" disabled={!enemy} onClick={attack}>
+				Attack
+			</button>
+			<button
+				className="defend-button"
+				disabled={!enemy}
+				onClick={() => alert("Defend!")}
+			>
+				Defend
+			</button>
+		</section>
 
-			<section id="kill-buttons">
-				<button onClick={attack}>Attack</button>
-				{/* <button>Defend</button> */}
-			</section>
-			{!!viewCard && (
-				<AutoPlayModal
-					viewCard={viewCard}
-					handleAutoPlayed={handleAutoPlayed}
-				/>
-			)}
-		</main>
-	)
+		<section id="player-section">
+			{!hero && <ChooseHeroModal chooseHero={(chosen) => setHero(chosen)} />}
+			<HeroCard hero={hero} />
+			<ActionCard card={firstCard} onClick={() => playCard(firstCard)} />
+			<ActionCard card={secondCard} onClick={() => playCard(secondCard)} />
+			<div id="action-deck" className="card" onClick={() => drawCard()}>
+				<p>Action Card Deck</p>
+			</div>
+		</section>
+
+		{!!viewCard && (
+			<AutoPlayModal viewCard={viewCard} handleAutoPlayed={handleAutoPlayed} />
+		)}
+	</main>
+)
 }
 
 export default Battleground
